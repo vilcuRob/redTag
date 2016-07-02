@@ -6,6 +6,7 @@
  * @ Helper class created to facilitate a/b testing development process;
  * @ Contains methods that that are dependent of jQuery and Optimizely
  * @ Created by Robert Vilcu : http://crafton.ro
+ * @ https://github.com/vilcuRob/redTag/
  * @ 02 July 2016
  * @
  */
@@ -49,6 +50,7 @@
             this.tagErrors  = config.tagErrors || false;
             this.goalsQa    = config.goalsQa || false;
             
+            // Check dependencies first
             if(this.tagErrors===true){ checkForDependencies(); }
             if(this.optyLog===true){ this.logOptimizely(); }
         }
