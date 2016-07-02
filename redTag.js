@@ -55,8 +55,6 @@
             if(this.optyLog===true){ this.logOptimizely(); }
         }
         
-        
-        
         /* -------------------------------------------------------
         * redTag methods: 
         * Created to facilitate the work with redTag
