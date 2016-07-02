@@ -23,6 +23,9 @@ redTag.deleteCookie(name); // - Delete a cookie by name
 redTag.ajaxFin(function(){
       console.log('Ajax finished'); // - Callback - Similar to ajaxComplete function
 });
+```
+```HTML
+// Optimizely functions shortcut - requires optimizely.js
 redTag.logOptimizely(); // - Shows optimizely's log even if config.optiLog == false on default
 redTag.triggerEvent('event_name_from_optimizely'); // Triggers event to Optimizely
 ```
