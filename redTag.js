@@ -18,7 +18,7 @@
     const $ = window.jQuery = window.$ || 'undefined';
     const optimizely = window.optimizely || [];
     
-    // Remove duplicated instances
+    // Check if object is empty
     var isEmpty = function(obj) {
         for(var prop in obj) {
             if(obj.hasOwnProperty(prop))
