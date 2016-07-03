@@ -23,6 +23,13 @@ redTag.deleteCookie(name); // - Delete a cookie by name
 redTag.ajaxFin(function(){
       console.log('Ajax finished'); // - Callback - Similar to ajaxComplete function
 });
+redTag.whenTrue({
+    delay: 150, // Repeat loop every milliseconds
+    condition: function(){ return window.test === true }, // Condition to test
+    callback: function(){
+        alert('window.test === true'); // - Callback - Logic after condition is true
+    }
+});
 ```
 ```HTML
 // Optimizely functions shortcut - requires optimizely.js
