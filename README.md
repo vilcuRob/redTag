@@ -27,9 +27,9 @@ redTag.ajaxFin(function(){
 });
 redTag.whenTrue({
     delay: 150, // Repeat loop every milliseconds
-    condition: function(){ return window.test === true }, // Condition to test
+    condition: function(){ return variable === true }, // Condition to test
     callback: function(){
-        alert('window.test === true'); // - Callback - Logic after condition is true
+        alert('variable is true'); // - Callback - Logic after condition is true
     }
 });
 ```
