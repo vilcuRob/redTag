@@ -157,6 +157,24 @@
             }
         }
         
+        // Public method - When condition is true, do logic
+        this.whenTrue = function(config) {
+            var config = config || {};
+            
+            var condition = config.condition || function(){ return true; };
+            var callback = config.callback || function(){ };
+            var delay = config.delay || 50;
+            
+            var checkCondition= function() {
+                if(condition()){
+                    callback();
+                }else{ 
+                    setTimeout(checkCondition, delay);
+                }
+            };
+            checkCondition();
+        };
+        
         /* -------------------------------------------------------
         * jQuery extends functionality: 
         * Created to add new functionality to jQuery
