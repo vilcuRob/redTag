@@ -22,7 +22,7 @@ redTag.setCookie(name,value,days); // - Set a cookie to the current document
 redTag.readCookie(name); // - Read a cookie by name - returns value
 redTag.deleteCookie(name); // - Delete a cookie by name
 redTag.ajaxFin(function(){
-      console.log('Ajax finished'); // - Callback - Similar to ajaxComplete function
+      console.log('XMLHttpRequest finished'); // - Callback - Similar to ajaxComplete function
 });
 redTag.whenTrue({
       delay: 150, // Repeat loop every milliseconds
