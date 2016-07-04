@@ -1,6 +1,5 @@
 # redTag.js
-* Helper class created to facilitate a/b testing development process;
-* Contains methods that that are dependent of jQuery and Optimizely
+* Helper class created to facilitate a/b testing development process
 
 # Installation
 * Add redTag.js library to your page
@@ -11,9 +10,9 @@
 # Usage
 ```HTML
 // redTag.js - Configuration
-redTag.config({ 
+redTag.config({
       optiLog: true, // Default false - Shows optimizely's log on startup
-      tagErrors: true, // Default false - Shows redTag errors on startup 
+      tagErrors: true, // Default false - Shows redTag errors on startup
       goalsQa: true // Default false - Logs to console custom events triggered
 });
 ```
@@ -26,21 +25,21 @@ redTag.ajaxFin(function(){
       console.log('Ajax finished'); // - Callback - Similar to ajaxComplete function
 });
 redTag.whenTrue({
-    delay: 150, // Repeat loop every milliseconds
-    condition: function(){ return variable === true }, // Condition to test
-    callback: function(){
-        alert('variable is true'); // - Callback - Logic after condition is true
-    }
+      delay: 150, // Repeat loop every milliseconds
+      condition: function(){ return variable === true }, // Condition to test
+      callback: function(){
+          alert('variable is true'); // - Callback - Logic after condition is true
+      }
 });
 ```
 ```HTML
 // Optimizely shortcuts - requires optimizely.js
-redTag.logOptimizely(); // - Shows optimizely's log even if config.optiLog == false on default
+redTag.logOptimizely(); // - Show optimizely's log even if config.optiLog == false
 redTag.triggerEvent('event_name_from_optimizely'); // Triggers event to Optimizely
 ```
 ```HTML
 // jQuery extend helpers - requires jQuery.js
 $('.element').waitFor(function(){
-      console.log('.element was created in the DOM'); // - Callback - Waits for element to exist
+      console.log('.element was created in the DOM'); // - Callback - When element is created
 });
 ```
