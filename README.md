@@ -28,7 +28,7 @@ redTag.whenTrue({
       delay: 150, // Repeat loop every milliseconds
       condition: function(){ return variable === true }, // Condition to test
       callback: function(){
-          alert('variable is true'); // - Callback - Logic after condition is true
+          console.log('variable is true'); // - Callback - Logic after condition is true
       }
 });
 ```
