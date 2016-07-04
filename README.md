@@ -26,6 +26,7 @@ redTag.ajaxFin(function(){
 });
 redTag.whenTrue({
       delay: 150, // Repeat loop every milliseconds
+      loopTimes: 10, // Number of times for the loop to run (looptimes * delay = total time)
       condition: function(){ return variable === true }, // Condition to test
       callback: function(){
           console.log('variable is true'); // - Callback - Logic after condition is true

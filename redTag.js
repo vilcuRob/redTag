@@ -26,6 +26,7 @@
         }
         return true;
     }
+
     // If redTag obj is empty return false;
     if(!isEmpty(redTag)){ return false; }
 
@@ -159,17 +160,27 @@
 
         // Public method - When condition is true, do logic
         this.whenTrue = function(config) {
-            var config = config || {};
+            var config    = config || {},
+                count     = 0,
+                timeoutFn = '',
+                condition = config.condition || function(){ return true; },
+                callback  = config.callback || function(){ return true; },
+                delay     = config.delay || 50,
+                loopTimes = config.loopTimes || 0;
 
-            var condition = config.condition || function(){ return true; };
-            var callback = config.callback || function(){ };
-            var delay = config.delay || 50;
-
-            var checkCondition= function() {
-                if(condition()){
-                    callback();
+            var checkCondition = function(){
+                if(loopTimes > 0 && loopTimes === count){
+                    clearTimeout(timeoutFn);
+                    return false;
                 }else{
-                    setTimeout(checkCondition, delay);
+                    if(condition()){
+                        callback();
+                        clearTimeout(timeoutFn);
+                        return false;
+                    }else{
+                        timeoutFn = setTimeout(checkCondition, delay);
+                        count++;
+                    }
                 }
             };
             checkCondition();
