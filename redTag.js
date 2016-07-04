@@ -2,7 +2,7 @@
  * redTag library.
  *
  * @ v2.0.0
- * @ 
+ * @
  * @ Helper class created to facilitate a/b testing development process;
  * @ Contains methods that that are dependent of jQuery and Optimizely
  * @ Created by Robert Vilcu : http://crafton.ro
@@ -17,7 +17,7 @@
     // Set the libraries dependencies
     const $ = window.jQuery = window.$ || 'undefined';
     const optimizely = window.optimizely || [];
-    
+
     // Check if object is empty
     var isEmpty = function(obj) {
         for(var prop in obj) {
@@ -28,48 +28,48 @@
     }
     // If redTag obj is empty return false;
     if(!isEmpty(redTag)){ return false; }
-    
+
     redTag = function(){
-        
+
         /* -------------------------------------------------------
-        * redTag config and init: 
+        * redTag config and init:
         * Configs static variables and initiates fn
         */
-        
+
         this.config = function(config){
             var config = config || {};
-            
+
             /*
             * Public redTag config:
             * optyLog    = bolean = console logs custom optimizely Log
             * tagErrors  = bolean = console logs internal library errors
             * goalsQa    = bolean = console logs the event when is triggered
             */
-            
+
             this.optyLog    = config.optyLog || false;
             this.tagErrors  = config.tagErrors || false;
             this.goalsQa    = config.goalsQa || false;
-            
+
             // Check dependencies first
             if(this.tagErrors===true){ checkForDependencies(); }
             if(this.optyLog===true){ this.logOptimizely(); }
         }
-        
+
         /* -------------------------------------------------------
-        * redTag methods: 
+        * redTag methods:
         * Created to facilitate the work with redTag
         */
-        
+
         // Private method = check for dependencies
         var checkForDependencies = function(){
-            if($ === 'undefined'){ 
-                consoleLog('jQuery is not available'); 
+            if($ === 'undefined'){
+                consoleLog('jQuery is not available');
             }
-            if(!optimizely || optimizely.length === 0 || typeof optimizely!== "object" || isEmpty(optimizely)){ 
+            if(!optimizely || optimizely.length === 0 || typeof optimizely!== "object" || isEmpty(optimizely)){
                 consoleLog('Optimizely is not available');
             }
         }
-        
+
         // Private method - fancy console log message
         var timesLogged = 0;
         var consoleLog = function(msg){
@@ -77,33 +77,33 @@
             console.log('%c['+timesLogged+']'+
                         '%c[redTag]:' +
                         '%c '+msg,
-                        'color:black;', 
-                        'color:red;', 
+                        'color:black;',
+                        'color:red;',
                         'color:blue;');
         };
-        
+
         /* -------------------------------------------------------
-        * Optimizely methods: 
+        * Optimizely methods:
         * Created to help interact with Optimizely's API
         */
-        
+
         // Public method - Set Optimizely Custom Event
         this.triggerEvent = function(eventName){
             optimizely.push(["trackEvent", eventName]);
-            if(this.goalsQa === true){ 
-                consoleLog('"'+eventName+'" event was triggered'); 
+            if(this.goalsQa === true){
+                consoleLog('"'+eventName+'" event was triggered');
             }
         }
 
         // Public method - Log Optimizely
         this.logOptimizely = function() { optimizely.push('log'); }
-        
+
         /* -------------------------------------------------------
-        * Helper methods: 
+        * Helper methods:
         * Created to help with common tasks
         */
-        
-        // Public method - Set Cookie 
+
+        // Public method - Set Cookie
         this.setCookie = function(name,value,days) {
             if (days) {
                 var date = new Date();
@@ -130,7 +130,7 @@
         this.deleteCookie = function(name) {
             this.setCookie(name,"",-1);
         }
-        
+
         // Public method - Wait for xhr finish
         this.ajaxFin = function(callback){
             var oldSend, i;
@@ -156,72 +156,74 @@
                 }
             }
         }
-        
+
         // Public method - When condition is true, do logic
         this.whenTrue = function(config) {
             var config = config || {};
-            
+
             var condition = config.condition || function(){ return true; };
             var callback = config.callback || function(){ };
             var delay = config.delay || 50;
-            
+
             var checkCondition= function() {
                 if(condition()){
                     callback();
-                }else{ 
+                }else{
                     setTimeout(checkCondition, delay);
                 }
             };
             checkCondition();
         };
-        
+
         /* -------------------------------------------------------
-        * jQuery extends functionality: 
+        * jQuery extends functionality:
         * Created to add new functionality to jQuery
         */
-        
-        var intervals = {};
-        var removeListener = function(selector) {
-            if (intervals[selector]) {
-                window.clearInterval(intervals[selector]);
-                intervals[selector] = null;
-            }
-        };
-        var found = 'waitFor.found';
-        
-        $.fn.waitFor = function(handler, shouldRunHandlerOnce, isChild){
-            var selector = this.selector;
-            var $this = $(selector);
-            var $elements = $this.not(function() { return $(this).data(found); });
-            if (handler === 'remove') {
-                // Hijack and remove interval 
-                // immediately if the code requests
-                removeListener(selector);
-            } else {
-                // Run the handler on all found elements and mark as found
-                $elements.each(handler).data(found, true);
-                if (shouldRunHandlerOnce && $this.length) {
-                    // Element was found, implying the handler already ran for all
-                    // matched elements
+        if($ !== 'undefined'){
+
+            var intervals = {};
+            var removeListener = function(selector) {
+                if (intervals[selector]) {
+                    window.clearInterval(intervals[selector]);
+                    intervals[selector] = null;
+                }
+            };
+            var found = 'waitFor.found';
+
+            $.fn.waitFor = function(handler, shouldRunHandlerOnce, isChild){
+                var selector = this.selector;
+                var $this = $(selector);
+                var $elements = $this.not(function() { return $(this).data(found); });
+                if (handler === 'remove') {
+                    // Hijack and remove interval
+                    // immediately if the code requests
                     removeListener(selector);
+                } else {
+                    // Run the handler on all found elements and mark as found
+                    $elements.each(handler).data(found, true);
+                    if (shouldRunHandlerOnce && $this.length) {
+                        // Element was found, implying the handler already ran for all
+                        // matched elements
+                        removeListener(selector);
+                    }
+                    else if (!isChild) {
+                        // If this is a recurring search or if the target has not yet been
+                        // found, create an interval to continue searching for the target
+                        intervals[selector] = window.setInterval(function () {
+                            $this.waitFor(handler, shouldRunHandlerOnce, true);
+                        }, 50);
+                    }
                 }
-                else if (!isChild) {
-                    // If this is a recurring search or if the target has not yet been
-                    // found, create an interval to continue searching for the target
-                    intervals[selector] = window.setInterval(function () {
-                        $this.waitFor(handler, shouldRunHandlerOnce, true);
-                    }, 50);
-                }
-            }
-            return $this;
-        };
-        
+                return $this;
+            };
+
+        } // End $ function extends
     } // End redTag function
-    
+
     /*
     * Append redTag to window
     * by instantiating a new object
     */
     window.redTag = new redTag;
-    
+
 })(window, window.redTag = window.redTag || {});
