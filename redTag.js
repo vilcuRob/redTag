@@ -224,6 +224,7 @@
     * Append redTag to window
     * by instantiating a new object
     */
+
     window.redTag = new redTag;
 
 })(window, window.redTag = window.redTag || {});
